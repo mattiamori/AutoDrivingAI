@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Wall
   - Road
+  - Agent
+  - Checkpoint
+  - CheckError
   layers:
   - Default
   - TransparentFX
@@ -13,7 +16,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Checkpoints
   - 
   - 
   - 

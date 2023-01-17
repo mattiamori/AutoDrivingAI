@@ -12,11 +12,18 @@ public class CarAgent : Agent
     //public int pacchiMassimi=10;
     private CarDriver carDriver;
     Rigidbody rBody;
+    public GameObject checkParent;
+    List<Transform> checkPoints = new List<Transform>();
+    public GameObject CheckError;
+
+    int active = 0;
+    int numChecks = 0;
 
     private void Start()
     {
         InvokeRepeating("setterReward", 0f, 0.5f);
     }
+
     private void setterReward()
     {
         SetReward(0.005f);
@@ -24,8 +31,18 @@ public class CarAgent : Agent
 
     public override void Initialize()
     {
+        numChecks = 0;
         carDriver = GetComponent<CarDriver>();
         rBody = GetComponent<Rigidbody>();
+
+        checkPoints = GetAllChildren(checkParent);
+        numChecks = checkPoints.Count();
+        foreach (Transform item in checkPoints)
+        {
+            item.gameObject.SetActive(false);
+        }
+        checkPoints[0].gameObject.SetActive(true);
+
     }
 
     public override void OnEpisodeBegin()
@@ -79,21 +96,35 @@ public class CarAgent : Agent
     {
         if (col.gameObject.tag == "Wall")
         {
-            Debug.Log("here");
-            Debug.Log("CollisionDetected: Building");
             SetReward(-2f);
             Reset();
             startEndingEpisode();
         }
+        if (col.gameObject.tag == "CheckError")
+        {
+            if (numChecks < checkPoints.Count)
+            {
+                SetReward(-2f);
+                Reset();
+                startEndingEpisode();
+            }
+            else
+            {
+                SetReward(1f);
+            }
+        }
     }
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Checkpoint"))
+        if (other.gameObject.tag == ("Checkpoint"))
         {
-            Debug.Log("Trigger CheckPoint");
+            checkPoints[active].gameObject.SetActive(false);
+            checkPoints[active + 1].gameObject.SetActive(true);
+            numChecks = numChecks + 1;
             SetReward(1f);
         }
+
     }
 
     public override void Heuristic(float[] actionsOut)
@@ -132,11 +163,15 @@ public class CarAgent : Agent
 
         float speed = carDriver.GetSpeed();
 
-        if(speed < 0.2f && speed > 0f)
+        if (speed < 0.2f && speed > 0f)
         {
             SetReward(-0.5f);
         }
-        if(speed == 0)
+        else if (speed == 0)
+        {
+            SetReward(-1.0f);
+        }
+        if (speed < 0)
         {
             SetReward(-2.0f);
         }
@@ -147,7 +182,7 @@ public class CarAgent : Agent
             //Debug.Log("FellOff");
             AddReward(-1f);
             Reset();
-            
+
             startEndingEpisode();
         }
     }
