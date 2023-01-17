@@ -18,15 +18,16 @@ public class CarAgent : Agent
 
     int active = 0;
     int numChecks = 0;
+    bool last = false;
 
     private void Start()
     {
-        InvokeRepeating("setterReward", 0f, 0.5f);
+        InvokeRepeating("setterReward", 0f, 1f);
     }
 
     private void setterReward()
     {
-        SetReward(0.005f);
+        SetReward(-0.0005f);
     }
 
     public override void Initialize()
@@ -34,7 +35,6 @@ public class CarAgent : Agent
         numChecks = 0;
         carDriver = GetComponent<CarDriver>();
         rBody = GetComponent<Rigidbody>();
-
         checkPoints = GetAllChildren(checkParent);
         numChecks = checkPoints.Count();
         foreach (Transform item in checkPoints)
@@ -62,6 +62,12 @@ public class CarAgent : Agent
 
     void Reset()
     {
+        active = 0;
+        foreach (Transform item in checkPoints)
+        {
+            item.gameObject.SetActive(false);
+        }
+        checkPoints[0].gameObject.SetActive(true);
         RespawnObject();
     }
 
@@ -85,9 +91,10 @@ public class CarAgent : Agent
 
     void RespawnObject()
     {
+        float rndm = Random.Range(-4.0f, 4.0f);
         carDriver.StopCompletely();
         rBody.transform.localPosition =
-            new Vector3(0, 0f, 0);
+            new Vector3(rndm, 0f, 0);
         rBody.transform.localRotation =
             new Quaternion(0, 0, 0, 1);
     }
@@ -100,19 +107,7 @@ public class CarAgent : Agent
             Reset();
             startEndingEpisode();
         }
-        if (col.gameObject.tag == "CheckError")
-        {
-            if (numChecks < checkPoints.Count)
-            {
-                SetReward(-2f);
-                Reset();
-                startEndingEpisode();
-            }
-            else
-            {
-                SetReward(1f);
-            }
-        }
+
     }
 
     void OnTriggerEnter(Collider other)
@@ -120,9 +115,31 @@ public class CarAgent : Agent
         if (other.gameObject.tag == ("Checkpoint"))
         {
             checkPoints[active].gameObject.SetActive(false);
-            checkPoints[active + 1].gameObject.SetActive(true);
-            numChecks = numChecks + 1;
-            SetReward(1f);
+            active = active + 1;
+            Debug.Log(active);
+            if(active == numChecks)
+            {
+                last = true;
+                active = 0;
+            }
+            checkPoints[active].gameObject.SetActive(true);
+            SetReward(0.5f);
+        }
+        if (other.gameObject.tag == ("CheckError"))
+        {
+            if (last == true)
+            {
+                other.gameObject.SetActive(false);
+                last = false;
+                SetReward(1f);
+                
+            }
+            else
+            {
+                SetReward(-2f);
+                Reset();
+                startEndingEpisode();
+            }
         }
 
     }
@@ -163,7 +180,7 @@ public class CarAgent : Agent
 
         float speed = carDriver.GetSpeed();
 
-        if (speed < 0.2f && speed > 0f)
+        if (speed < 0.1f && speed > 0f)
         {
             SetReward(-0.5f);
         }
