@@ -22,26 +22,25 @@ public class CarAgent : Agent
 
     private void Start()
     {
-        InvokeRepeating("setterReward", 0f, 1f);
+        InvokeRepeating("setterReward", 0f, 0.5f);
     }
 
     private void setterReward()
     {
-        SetReward(-0.0005f);
+        SetReward(-0.005f);
     }
 
     public override void Initialize()
     {
-        numChecks = 0;
         carDriver = GetComponent<CarDriver>();
         rBody = GetComponent<Rigidbody>();
         checkPoints = GetAllChildren(checkParent);
         numChecks = checkPoints.Count();
-        foreach (Transform item in checkPoints)
+/*        foreach (Transform item in checkPoints)
         {
             item.gameObject.SetActive(false);
         }
-        checkPoints[0].gameObject.SetActive(true);
+        checkPoints[0].gameObject.SetActive(true);*/
 
     }
 
@@ -57,17 +56,16 @@ public class CarAgent : Agent
     void Update()
     {
 
-
     }
 
     void Reset()
     {
         active = 0;
-        foreach (Transform item in checkPoints)
+/*        foreach (Transform item in checkPoints)
         {
             item.gameObject.SetActive(false);
         }
-        checkPoints[0].gameObject.SetActive(true);
+        checkPoints[0].gameObject.SetActive(true);*/
         RespawnObject();
     }
 
@@ -114,25 +112,36 @@ public class CarAgent : Agent
     {
         if (other.gameObject.tag == ("Checkpoint"))
         {
-            checkPoints[active].gameObject.SetActive(false);
-            active = active + 1;
-            Debug.Log(active);
-            if(active == numChecks)
+            if(checkPoints[active].gameObject == other.gameObject)
             {
-                last = true;
-                active = 0;
+                
+                active = active + 1;
+                Debug.Log("Active: "+ active);
+                Debug.Log("numChecks: " + numChecks);
+                if (active == numChecks)
+                {
+                    Debug.Log("here: ");
+                    last = true;
+                    active = 0;
+                }
+                SetReward(0.1f);
             }
-            checkPoints[active].gameObject.SetActive(true);
-            SetReward(0.5f);
+            else
+            {
+                SetReward(-1.0f);
+                Reset();
+                EndEpisode();
+            }
+
         }
         if (other.gameObject.tag == ("CheckError"))
         {
+            Debug.Log("Here, " + last);
             if (last == true)
             {
+                Debug.Log("Setting");
                 other.gameObject.SetActive(false);
-                last = false;
-                SetReward(1f);
-                
+                SetReward(0.5f);
             }
             else
             {
