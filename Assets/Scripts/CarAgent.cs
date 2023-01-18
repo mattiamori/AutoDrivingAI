@@ -10,15 +10,19 @@ public class CarAgent : Agent
 {
 
     //public int pacchiMassimi=10;
-    private CarDriver carDriver;
     Rigidbody rBody;
     public GameObject checkParent;
     List<Transform> checkPoints = new List<Transform>();
     public GameObject sampleObstacle;
 
-    int active = 0;
-    int numChecks = 0;
-    bool last = false;
+    private List<Transform> obstacles;
+    private CarDriver carDriver;
+   [SerializeField] private int obstacleRange=5;
+    private int active = 0;
+    private int numChecks = 0;
+    private bool last = false;
+    [SerializeField] private int lap = 0;
+
 
     private void Start()
     {
@@ -36,6 +40,9 @@ public class CarAgent : Agent
         rBody = GetComponent<Rigidbody>();
         checkPoints = GetAllChildren(checkParent);
         numChecks = checkPoints.Count();
+        obstacles = GetAllChildren(sampleObstacle);
+        activeObstales(false);
+
         /*        foreach (Transform item in checkPoints)
                 {
                     item.gameObject.SetActive(false);
@@ -60,6 +67,7 @@ public class CarAgent : Agent
 
     void Reset()
     {
+        lap = 0;
         active = 0;
         /*        foreach (Transform item in checkPoints)
                 {
@@ -116,13 +124,13 @@ public class CarAgent : Agent
             {
 
                 active = active + 1;
-                Debug.Log("Active: " + active);
-                Debug.Log("numChecks: " + numChecks);
                 if (active == numChecks)
                 {
-                    Debug.Log("here: ");
+                    activeObstales(false);
                     last = true;
                     active = 0;
+                    lap++;
+                    spawnNewObstacles(Mathf.FloorToInt(lap / obstacleRange));
                 }
                 SetReward(0.1f);
             }
@@ -136,10 +144,8 @@ public class CarAgent : Agent
         }
         if (other.gameObject.tag == ("CheckError"))
         {
-            Debug.Log("Here, " + last);
             if (last == true)
             {
-                Debug.Log("Setting");
                 other.gameObject.SetActive(false);
                 SetReward(0.5f);
             }
@@ -218,4 +224,20 @@ public class CarAgent : Agent
         EndEpisode();
     }
 
+
+    void spawnNewObstacles(int n)
+    {
+        for(int i=0; i<n; i++)
+        {
+            int randomIndex = Random.Range(0, obstacles.Count);
+            obstacles[randomIndex].gameObject.SetActive(true);
+
+        }
+    }
+
+    void activeObstales(bool flag)
+    {
+        foreach (Transform t in obstacles)
+            t.gameObject.SetActive(flag);
+    }
 }
