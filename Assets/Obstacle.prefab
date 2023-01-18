@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7761103670164231654}
   - component: {fileID: -1743051733471590768}
   m_Layer: 0
-  m_Name: Track_Fence_line_type_01_red_block_1&5m_free_obs
+  m_Name: Obstacle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

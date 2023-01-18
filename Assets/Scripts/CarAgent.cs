@@ -14,7 +14,7 @@ public class CarAgent : Agent
     Rigidbody rBody;
     public GameObject checkParent;
     List<Transform> checkPoints = new List<Transform>();
-    public GameObject CheckError;
+    public GameObject sampleObstacle;
 
     int active = 0;
     int numChecks = 0;
@@ -36,11 +36,11 @@ public class CarAgent : Agent
         rBody = GetComponent<Rigidbody>();
         checkPoints = GetAllChildren(checkParent);
         numChecks = checkPoints.Count();
-/*        foreach (Transform item in checkPoints)
-        {
-            item.gameObject.SetActive(false);
-        }
-        checkPoints[0].gameObject.SetActive(true);*/
+        /*        foreach (Transform item in checkPoints)
+                {
+                    item.gameObject.SetActive(false);
+                }
+                checkPoints[0].gameObject.SetActive(true);*/
 
     }
 
@@ -61,11 +61,11 @@ public class CarAgent : Agent
     void Reset()
     {
         active = 0;
-/*        foreach (Transform item in checkPoints)
-        {
-            item.gameObject.SetActive(false);
-        }
-        checkPoints[0].gameObject.SetActive(true);*/
+        /*        foreach (Transform item in checkPoints)
+                {
+                    item.gameObject.SetActive(false);
+                }
+                checkPoints[0].gameObject.SetActive(true);*/
         RespawnObject();
     }
 
@@ -112,11 +112,11 @@ public class CarAgent : Agent
     {
         if (other.gameObject.tag == ("Checkpoint"))
         {
-            if(checkPoints[active].gameObject == other.gameObject)
+            if (checkPoints[active].gameObject == other.gameObject)
             {
-                
+
                 active = active + 1;
-                Debug.Log("Active: "+ active);
+                Debug.Log("Active: " + active);
                 Debug.Log("numChecks: " + numChecks);
                 if (active == numChecks)
                 {
