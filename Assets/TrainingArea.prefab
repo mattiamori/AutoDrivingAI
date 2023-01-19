@@ -908,7 +908,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4303917557874212854}
-  - component: {fileID: 6529234550030000255}
   m_Layer: 0
   m_Name: TrainingArea
   m_TagString: Checkpoint
@@ -935,19 +934,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6529234550030000255
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4303917557874212853}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98cf506615080364898523552288d0ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  score: {fileID: 5047014734228943163}
 --- !u!1 &4303917558490123047
 GameObject:
   m_ObjectHideFlags: 0
@@ -5636,6 +5622,19 @@ MonoBehaviour:
   rayMissColor: {r: 1, g: 1, b: 1, a: 1}
   m_StartVerticalOffset: 0
   m_EndVerticalOffset: 0
+--- !u!114 &847397528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4305299224745711910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98cf506615080364898523552288d0ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  score: {fileID: 5047014734228943163}
 --- !u!1001 &4323901139258909919
 PrefabInstance:
   m_ObjectHideFlags: 0
