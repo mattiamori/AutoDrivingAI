@@ -908,7 +908,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4303917557874212854}
-  - component: {fileID: 91218500546210029}
+  - component: {fileID: 6529234550030000255}
   m_Layer: 0
   m_Name: TrainingArea
   m_TagString: Checkpoint
@@ -935,7 +935,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &91218500546210029
+--- !u!114 &6529234550030000255
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5567,8 +5567,6 @@ MonoBehaviour:
   MaxStep: 0
   checkParent: {fileID: 4303917558490123047}
   sampleObstacle: {fileID: 2107229271922180141}
-  obstacleRange: 5
-  lap: 0
 --- !u!114 &4303917557272327472
 MonoBehaviour:
   m_ObjectHideFlags: 0

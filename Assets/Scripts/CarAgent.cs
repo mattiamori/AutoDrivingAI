@@ -15,13 +15,12 @@ public class CarAgent : Agent
     public GameObject checkParent;
     List<Transform> checkPoints = new List<Transform>();
     public GameObject sampleObstacle;
-
     private List<Transform> obstacles;
     private CarDriver carDriver;
-   [SerializeField] private int obstacleRange=1;
+    private int obstacleRange = 1;
     private int active = 0;
     private int numChecks = 0;
-    [SerializeField] private int lap = 0;
+    private int lap = 0;
 
 
     private void Start()
@@ -49,7 +48,6 @@ public class CarAgent : Agent
                     item.gameObject.SetActive(false);
                 }
                 checkPoints[0].gameObject.SetActive(true);*/
-
     }
 
     public override void OnEpisodeBegin()
@@ -90,12 +88,10 @@ public class CarAgent : Agent
         return children;
     }
 
-    void UpdatePoints()
+    public void UpdatePoints()
     {
         GameManager.instance.SetPoints(lap);
     }
-
-
     public override void CollectObservations(VectorSensor sensor)
     {
         /*Vector3 checkpointForward = checkPoints[active].transform.forward;
@@ -199,7 +195,7 @@ public class CarAgent : Agent
 
         float speed = carDriver.GetSpeed();
 
-        if (speed >= 0f && speed <=0.15f)
+        if (speed >= 0f && speed <= 0.15f)
         {
             SetReward(-1.0f);
         }
@@ -230,7 +226,7 @@ public class CarAgent : Agent
 
     void spawnNewObstacles(int n)
     {
-        for(int i=0; i<n; i++)
+        for (int i = 0; i < n; i++)
         {
             int randomIndex = Random.Range(0, obstacles.Count);
             obstacles[randomIndex].gameObject.SetActive(true);
