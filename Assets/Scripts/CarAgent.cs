@@ -15,7 +15,6 @@ public class CarAgent : Agent
     public GameObject checkParent;
     List<Transform> checkPoints = new List<Transform>();
     public GameObject sampleObstacle;
-    public Text lapText;
 
     private List<Transform> obstacles;
     private CarDriver carDriver;
@@ -37,7 +36,6 @@ public class CarAgent : Agent
 
     public override void Initialize()
     {
-        lapText.text = lap.ToString();
         carDriver = GetComponent<CarDriver>();
         rBody = GetComponent<Rigidbody>();
         checkPoints = GetAllChildren(checkParent);
@@ -71,7 +69,6 @@ public class CarAgent : Agent
     {
 
         lap = 0;
-        lapText.text = lap.ToString();
         active = 0;
         /*        foreach (Transform item in checkPoints)
                 {
@@ -142,7 +139,6 @@ public class CarAgent : Agent
                     activeObstales(false);
                     active = 0;
                     lap++;
-                    lapText.text = lap.ToString();
                     spawnNewObstacles(Mathf.FloorToInt(lap / obstacleRange));
                 }
                 AddReward(1f);
