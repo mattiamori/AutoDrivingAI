@@ -18,7 +18,7 @@ public class CarAgent : Agent
 
     private List<Transform> obstacles;
     private CarDriver carDriver;
-   [SerializeField] private int obstacleRange=5;
+   [SerializeField] private int obstacleRange=1;
     private int active = 0;
     private int numChecks = 0;
     [SerializeField] private int lap = 0;
@@ -42,6 +42,7 @@ public class CarAgent : Agent
         numChecks = checkPoints.Count();
         obstacles = GetAllChildren(sampleObstacle);
         activeObstales(false);
+        UpdatePoints();
 
         /*        foreach (Transform item in checkPoints)
                 {
@@ -69,12 +70,14 @@ public class CarAgent : Agent
     {
 
         lap = 0;
+        UpdatePoints();
         active = 0;
         /*        foreach (Transform item in checkPoints)
                 {
                     item.gameObject.SetActive(false);
                 }
                 checkPoints[0].gameObject.SetActive(true);*/
+        activeObstales(false);
         RespawnObject();
     }
 
@@ -85,6 +88,11 @@ public class CarAgent : Agent
             if (child.GetComponent<Transform>() != null)
                 children.Add(child.GetComponent<Transform>());
         return children;
+    }
+
+    void UpdatePoints()
+    {
+        GameManager.instance.SetPoints(lap);
     }
 
 
@@ -139,6 +147,7 @@ public class CarAgent : Agent
                     activeObstales(false);
                     active = 0;
                     lap++;
+                    UpdatePoints();
                     spawnNewObstacles(Mathf.FloorToInt(lap / obstacleRange));
                 }
                 AddReward(1f);
