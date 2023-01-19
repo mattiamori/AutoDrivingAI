@@ -5,6 +5,7 @@ using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CarAgent : Agent
 {
@@ -14,13 +15,13 @@ public class CarAgent : Agent
     public GameObject checkParent;
     List<Transform> checkPoints = new List<Transform>();
     public GameObject sampleObstacle;
+    public Text lapText;
 
     private List<Transform> obstacles;
     private CarDriver carDriver;
    [SerializeField] private int obstacleRange=5;
     private int active = 0;
     private int numChecks = 0;
-    private bool last = false;
     [SerializeField] private int lap = 0;
 
 
@@ -36,6 +37,7 @@ public class CarAgent : Agent
 
     public override void Initialize()
     {
+        lapText.text = lap.ToString();
         carDriver = GetComponent<CarDriver>();
         rBody = GetComponent<Rigidbody>();
         checkPoints = GetAllChildren(checkParent);
@@ -67,7 +69,9 @@ public class CarAgent : Agent
 
     void Reset()
     {
+
         lap = 0;
+        lapText.text = lap.ToString();
         active = 0;
         /*        foreach (Transform item in checkPoints)
                 {
@@ -89,6 +93,9 @@ public class CarAgent : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
+        /*Vector3 checkpointForward = checkPoints[active].transform.forward;
+        float directionalDot = Vector3.Dot(transform.forward, checkpointForward);
+        sensor.AddObservation(directionalDot);*/
 
         //Agent Velocity
         sensor.AddObservation(transform.localPosition);
@@ -113,6 +120,12 @@ public class CarAgent : Agent
             Reset();
             startEndingEpisode();
         }
+        if (col.gameObject.tag == "Obstacle")
+        {
+            SetReward(-1f);
+            Reset();
+            startEndingEpisode();
+        }
 
     }
 
@@ -127,34 +140,20 @@ public class CarAgent : Agent
                 if (active == numChecks)
                 {
                     activeObstales(false);
-                    last = true;
                     active = 0;
                     lap++;
+                    lapText.text = lap.ToString();
                     spawnNewObstacles(Mathf.FloorToInt(lap / obstacleRange));
                 }
-                SetReward(0.1f);
+                AddReward(1f);
             }
             else
             {
-                SetReward(-1.0f);
-                Reset();
-                EndEpisode();
-            }
-
-        }
-        if (other.gameObject.tag == ("CheckError"))
-        {
-            if (last == true)
-            {
-                other.gameObject.SetActive(false);
-                SetReward(0.5f);
-            }
-            else
-            {
-                SetReward(-2f);
+                AddReward(-1.0f);
                 Reset();
                 startEndingEpisode();
             }
+
         }
 
     }
@@ -195,17 +194,17 @@ public class CarAgent : Agent
 
         float speed = carDriver.GetSpeed();
 
-        if (speed < 0.1f && speed > 0f)
+        if (speed >= 0f && speed <=0.15f)
         {
-            SetReward(-0.5f);
+            SetReward(-1.0f);
         }
-        else if (speed == 0)
+        if (speed == 0)
         {
             SetReward(-1.0f);
         }
         if (speed < 0)
         {
-            SetReward(-2.0f);
+            SetReward(-1.0f);
         }
         carDriver.SetInputs(forwardAmount, turnAmount);
 
@@ -220,7 +219,6 @@ public class CarAgent : Agent
     }
     void startEndingEpisode()
     {
-
         EndEpisode();
     }
 

@@ -9,6 +9,7 @@ TagManager:
   - Agent
   - Checkpoint
   - CheckError
+  - Obstacle
   layers:
   - Default
   - TransparentFX
