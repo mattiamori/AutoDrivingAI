@@ -12,12 +12,14 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
+        points = 0;
+        score.text = "Punti: \n" + points.ToString();
         instance = this;
     }
 
     void Start()
     {
-        points = 0;
+        
     }
 
     // Update is called once per frame

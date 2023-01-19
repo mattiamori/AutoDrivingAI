@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
@@ -21,10 +22,12 @@ public class CarAgent : Agent
     private int active = 0;
     private int numChecks = 0;
     private int lap = 0;
+    public TextMeshPro score;
 
 
     private void Start()
     {
+        score.text = "Punti: \n" + lap.ToString();
         InvokeRepeating("setterReward", 0f, 0.5f);
     }
 
@@ -42,12 +45,6 @@ public class CarAgent : Agent
         obstacles = GetAllChildren(sampleObstacle);
         activeObstales(false);
         UpdatePoints();
-
-        /*        foreach (Transform item in checkPoints)
-                {
-                    item.gameObject.SetActive(false);
-                }
-                checkPoints[0].gameObject.SetActive(true);*/
     }
 
     public override void OnEpisodeBegin()
@@ -90,8 +87,9 @@ public class CarAgent : Agent
 
     public void UpdatePoints()
     {
-        GameManager.instance.SetPoints(lap);
+        score.text = "Punti: \n" + lap.ToString();
     }
+
     public override void CollectObservations(VectorSensor sensor)
     {
         /*Vector3 checkpointForward = checkPoints[active].transform.forward;
@@ -238,5 +236,10 @@ public class CarAgent : Agent
     {
         foreach (Transform t in obstacles)
             t.gameObject.SetActive(flag);
+    }
+
+    public void UpdateTextPoints()
+    {
+        
     }
 }
