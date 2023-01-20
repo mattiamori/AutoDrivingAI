@@ -186,14 +186,14 @@ public class CarAgent : Agent
         switch (actions.DiscreteActions[1])
         {
             case 0: turnAmount = 0f; break;
-            case 1: turnAmount = 3f; break;
-            case 2: turnAmount = -3f; break;
+            case 1: turnAmount = 2f; break;
+            case 2: turnAmount = -2f; break;
 
         }
 
         float speed = carDriver.GetSpeed();
 
-        if (speed >= 0f && speed <= 0.15f)
+        if (speed >= 0f && speed <= 0.1f)
         {
             SetReward(-1.0f);
         }
