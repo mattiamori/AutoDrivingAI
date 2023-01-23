@@ -144,11 +144,11 @@ public class CarAgent : Agent
                     UpdatePoints();
                     spawnNewObstacles(Mathf.FloorToInt(lap / obstacleRange));
                 }
-                AddReward(1f);
+                AddReward(0.1f);
             }
             else
             {
-                AddReward(-1.0f);
+                SetReward(-1.0f);
                 Reset();
                 startEndingEpisode();
             }
@@ -180,7 +180,7 @@ public class CarAgent : Agent
         switch (actions.DiscreteActions[0])
         {
             case 0: forwardAmount = 0f; break;
-            case 1: forwardAmount = 0.3f; break;
+            case 1: forwardAmount = 0.2f; break;
             case 2: forwardAmount = -0.1f; break;
         }
         switch (actions.DiscreteActions[1])
@@ -210,7 +210,7 @@ public class CarAgent : Agent
         if (transform.localPosition.y < -1)
         {
             //Debug.Log("FellOff");
-            AddReward(-1f);
+            SetReward(-1f);
             Reset();
 
             startEndingEpisode();
