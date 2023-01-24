@@ -92,13 +92,13 @@ public class CarAgent : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        /*Vector3 checkpointForward = checkPoints[active].transform.forward;
+        Vector3 checkpointForward = checkPoints[active].transform.forward;
         float directionalDot = Vector3.Dot(transform.forward, checkpointForward);
-        sensor.AddObservation(directionalDot);*/
+        sensor.AddObservation(directionalDot);
 
         //Agent Velocity
-        sensor.AddObservation(transform.localPosition);
-        sensor.AddObservation(carDriver.GetSpeed());
+/*        sensor.AddObservation(transform.localPosition);
+        sensor.AddObservation(carDriver.GetSpeed());*/
     }
 
     void RespawnObject()
@@ -121,7 +121,7 @@ public class CarAgent : Agent
         }
         if (col.gameObject.tag == "Obstacle")
         {
-            SetReward(-1f);
+            SetReward(-2f);
             Reset();
             startEndingEpisode();
         }
@@ -144,7 +144,7 @@ public class CarAgent : Agent
                     UpdatePoints();
                     spawnNewObstacles(Mathf.FloorToInt(lap / obstacleRange));
                 }
-                AddReward(0.1f);
+                SetReward(0.5f);
             }
             else
             {
@@ -186,22 +186,18 @@ public class CarAgent : Agent
         switch (actions.DiscreteActions[1])
         {
             case 0: turnAmount = 0f; break;
-            case 1: turnAmount = 2f; break;
-            case 2: turnAmount = -2f; break;
+            case 1: turnAmount = 1.5f; break;
+            case 2: turnAmount = -1.5f; break;
 
         }
 
         float speed = carDriver.GetSpeed();
 
-        if (speed >= 0f && speed <= 0.1f)
+        if (speed >= 0f && speed <= 0.05f)
         {
-            SetReward(-1.0f);
+            SetReward(-0.1f);
         }
-        if (speed == 0)
-        {
-            SetReward(-1.0f);
-        }
-        if (speed < 0)
+        if (speed <= 0)
         {
             SetReward(-1.0f);
         }
