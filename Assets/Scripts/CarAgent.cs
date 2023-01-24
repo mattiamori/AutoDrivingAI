@@ -33,7 +33,7 @@ public class CarAgent : Agent
 
     private void setterReward()
     {
-        SetReward(-0.005f);
+        AddReward(-0.005f);
     }
 
     public override void Initialize()
@@ -115,13 +115,13 @@ public class CarAgent : Agent
     {
         if (col.gameObject.tag == "Wall")
         {
-            SetReward(-2f);
+            AddReward(-2f);
             Reset();
             startEndingEpisode();
         }
         if (col.gameObject.tag == "Obstacle")
         {
-            SetReward(-2f);
+            AddReward(-2f);
             Reset();
             startEndingEpisode();
         }
@@ -144,11 +144,11 @@ public class CarAgent : Agent
                     UpdatePoints();
                     spawnNewObstacles(Mathf.FloorToInt(lap / obstacleRange));
                 }
-                SetReward(0.5f);
+                AddReward(0.5f);
             }
             else
             {
-                SetReward(-1.0f);
+                AddReward(-1.0f);
                 Reset();
                 startEndingEpisode();
             }
@@ -195,18 +195,18 @@ public class CarAgent : Agent
 
         if (speed >= 0f && speed <= 0.05f)
         {
-            SetReward(-0.1f);
+            AddReward(-0.1f);
         }
         if (speed <= 0)
         {
-            SetReward(-1.0f);
+            AddReward(-1.0f);
         }
         carDriver.SetInputs(forwardAmount, turnAmount);
 
         if (transform.localPosition.y < -1)
         {
             //Debug.Log("FellOff");
-            SetReward(-1f);
+            AddReward(-1f);
             Reset();
 
             startEndingEpisode();
