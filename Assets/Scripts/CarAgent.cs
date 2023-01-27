@@ -92,13 +92,13 @@ public class CarAgent : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        Vector3 checkpointForward = checkPoints[active].transform.forward;
+/*        Vector3 checkpointForward = checkPoints[active].transform.forward;
         float directionalDot = Vector3.Dot(transform.forward, checkpointForward);
         sensor.AddObservation(directionalDot);
-
+*/
         //Agent Velocity
-/*        sensor.AddObservation(transform.localPosition);
-        sensor.AddObservation(carDriver.GetSpeed());*/
+        sensor.AddObservation(transform.localPosition);
+        sensor.AddObservation(carDriver.GetSpeed());
     }
 
     void RespawnObject()
@@ -186,8 +186,8 @@ public class CarAgent : Agent
         switch (actions.DiscreteActions[1])
         {
             case 0: turnAmount = 0f; break;
-            case 1: turnAmount = 1.5f; break;
-            case 2: turnAmount = -1.5f; break;
+            case 1: turnAmount = 2.5f; break;
+            case 2: turnAmount = -2.5f; break;
 
         }
 
