@@ -22,12 +22,14 @@ public class CarAgent : Agent
     private int active = 0;
     private int numChecks = 0;
     private int lap = 0;
+    private int maxLap = 0;
     public TextMeshPro score;
-
+    public TextMeshPro maxScore;
 
     private void Start()
     {
         score.text = "Punti: \n" + lap.ToString();
+        maxScore.text = "Punti Massimi \n" + maxLap.ToString();
         InvokeRepeating("setterReward", 0f, 0.5f);
     }
 
@@ -88,6 +90,11 @@ public class CarAgent : Agent
     public void UpdatePoints()
     {
         score.text = "Punti: \n" + lap.ToString();
+        if (lap > maxLap)
+            maxLap = lap;
+        maxScore.text = "Punti Massimi: \n" + maxLap.ToString();
+
+
     }
 
     public override void CollectObservations(VectorSensor sensor)
