@@ -5488,11 +5488,43 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4592236589341652, guid: 0c015dbff2c36e94089df72dedec0b0e, type: 3}
   m_PrefabInstance: {fileID: 4303917558800737280}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4305085226976808288 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1172092605065568, guid: 0c015dbff2c36e94089df72dedec0b0e, type: 3}
+  m_PrefabInstance: {fileID: 4303917558800737280}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4305299224745711910 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1663436209126694, guid: 0c015dbff2c36e94089df72dedec0b0e, type: 3}
   m_PrefabInstance: {fileID: 4303917558800737280}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &543578762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4305085226976808288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bb6b867a41448888c1cd4f99643ad71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SensorName: dwdsas
+  m_DetectableTags:
+  - Checkpoint
+  m_RaysPerDirection: 17
+  m_MaxRayDegrees: 130.4
+  m_SphereCastRadius: 1.33
+  m_RayLength: 211
+  m_RayLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ObservationStacks: 1
+  rayHitColor: {r: 0, g: 0.14507627, b: 1, a: 1}
+  rayMissColor: {r: 1, g: 1, b: 1, a: 1}
+  m_StartVerticalOffset: 1
+  m_EndVerticalOffset: 1
 --- !u!54 &4303917557272327474
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5584,8 +5616,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_BrainParameters:
     VectorObservationSize: 4
-    NumStackedVectorObservations: 10
-    VectorActionSize: 0300000003000000
+    NumStackedVectorObservations: 42
+    VectorActionSize: 030000000300000003000000
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
   m_Model: {fileID: 0}

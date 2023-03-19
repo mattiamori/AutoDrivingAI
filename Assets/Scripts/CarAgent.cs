@@ -122,7 +122,7 @@ public class CarAgent : Agent
     {
         if (col.gameObject.tag == "Wall")
         {
-            AddReward(-2f);
+            AddReward(-3f);
             Reset();
             startEndingEpisode();
         }
@@ -193,14 +193,14 @@ public class CarAgent : Agent
         switch (actions.DiscreteActions[1])
         {
             case 0: turnAmount = 0f; break;
-            case 1: turnAmount = 2.5f; break;
-            case 2: turnAmount = -2.5f; break;
+            case 1: turnAmount = 1.75f; break;
+            case 2: turnAmount = -1.75f; break;
 
         }
 
         float speed = carDriver.GetSpeed();
 
-        if (speed >= 0f && speed <= 0.05f)
+        if (speed >= 0f && speed <= 0.5f)
         {
             AddReward(-0.1f);
         }

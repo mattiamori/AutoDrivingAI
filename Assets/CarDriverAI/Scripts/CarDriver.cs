@@ -6,9 +6,9 @@ public class CarDriver : MonoBehaviour {
 
     #region Fields
     private float speed;
-    private float speedMax = 70f;
+ [SerializeField]   private float speedMax = 70f;
     private float speedMin = -50f;
-    private float acceleration = 30f;
+  [SerializeField]  private float acceleration = 35f;
     private float brakeSpeed = 100f;
     private float reverseSpeed = 30f;
     private float idleSlowdown = 10f;
@@ -25,6 +25,7 @@ public class CarDriver : MonoBehaviour {
     #endregion
 
     private void Awake() {
+        Time.timeScale = 10;
         carRigidbody = GetComponent<Rigidbody>();
     }
 
